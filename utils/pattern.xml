@@ -1,0 +1,15 @@
+<pattern>
+    <vicalib>
+        <preset name="big_pattern" index="0" serialno="0" type="photodepth_c_r_s_lr_sr" version="2.0">
+            <width> 297 </width>
+            <height> 210 </height>
+            <!-- Pattern parameters ordered as per type name. -->
+            <!-- [ columns; rows; grid spacing (mm); large radius (mm); small radius (mm) ] -->
+            <params> [ 19; 10; 5.2797; 1.58266402596; 1.05885087316 ] </params>
+        </preset>
+        <pose>
+            <!-- Pattern pose. World from Pattern point transfer. 3x4 matrix -->
+            <T_wc> [ 1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0 ] </T_wc>
+        </pose>
+    </vicalib>
+</pattern>

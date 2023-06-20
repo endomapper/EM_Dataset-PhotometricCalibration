@@ -1,0 +1,72 @@
+#!/bin/bash
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+OK="[${GREEN}OK${NC}]"
+INFO="[${BLUE}INFO${NC}]"
+
+CURRENT_DIR=$(pwd)
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+echo
+cat LICENSE
+echo
+echo
+echo
+echo -e "${INFO} Checking prerequisites..."
+if ffmpeg -version >/dev/null; then
+    echo -e "${OK} FFmpeg is installed."
+else
+    echo -e "${ERROR} FFmpeg is not installed."
+    exit 2
+fi
+if python --version | egrep "Python 3." >/dev/null; then
+    echo -e "${OK} Python 3.X is installed."
+else
+    echo -e "${ERROR} Python 3.X is not installed."
+    echo -e "${INFO} Maybe you should install 'python-is-python3'".
+    exit 2
+fi
+if vicalib --version > /dev/null; then
+    echo -e "${OK} Vicalib is installed."
+else
+    echo -e "${ERROR} Vicalib is not installed."
+    exit 2
+fi
+echo
+echo
+echo "Download the EndoMapper dataset at:"
+echo "https://doi.org/10.7303/syn26707219"
+echo
+echo "To calibrate your own sequence, add a new 'Endoscope_XX' folder following the original dataset structure."
+echo
+echo "The calibration sequences should be accesible at 'DATASET/Calibrations/Endoscope_XX'."
+echo
+echo -n "Provide the path where you downloaded the DATASET: "
+read DATASET_DIR
+echo
+echo -e "${INFO} Using '${DATASET_DIR}'..."
+echo
+echo
+echo "Select camera model:"
+echo " - kb4: The Kannala Brandt fisheye camera model (default)."
+echo " - poly2: Polynomial pinhole camera model with two distortion parameters."
+echo
+echo -n "For EndoMapper dataset use kb4 (default): "
+read CAMERA_MODEL
+if [ "$CAMERA_MODEL" != "poly2" ]; then
+    CAMERA_MODEL="kb4"
+fi
+echo
+echo
+echo -e "${INFO} Using '${CAMERA_MODEL}' camera model..."
+echo
+echo
+chmod +x ${SCRIPT_DIR}/utils/prepare_dataset.sh
+${SCRIPT_DIR}/utils/prepare_dataset.sh ${DATASET_DIR} ${CAMERA_MODEL}
+echo
+echo
+chmod +x ${SCRIPT_DIR}/utils/calibrate_dataset.sh
+${SCRIPT_DIR}/utils/calibrate_dataset.sh ${DATASET_DIR}
+
+cd ${CURRENT_DIR}

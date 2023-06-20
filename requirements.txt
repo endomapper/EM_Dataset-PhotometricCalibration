@@ -1,0 +1,6 @@
+matplotlib==3.5.1
+nptyping==1.4.4
+numpy==1.22.2
+opencv-python==3.4.17
+scipy==1.8.0
+tqdm==4.61.2
