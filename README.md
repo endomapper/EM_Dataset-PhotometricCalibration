@@ -59,13 +59,13 @@ Follow the authors' instructions for compiling and installing [this version](htt
 
 We use the geometric calibration obtained according to the [EM_Dataset-GeometricCalibration](https://github.com/endomapper/EM_Dataset-GeometricCalibration) method.
 
-Prepare and run the geometric calibration to obtain the calibration `.xml` before starting the next steps. Place the '.xml' together with the `.mov` video of the calibration sequence.
+Prepare and run the geometric calibration to obtain the calibration `.xml` before starting the next steps. Place the `.xml` together with the `.mov` video of the calibration sequence.
 
 # 2. EndoMapper photometric calibration
 
 We provide a script to calibrate all endoscopes in the EndoMapper dataset.
 
-Before proceeding, check the (Prerequisites)[#prerequisites] section and make sure that the mask file at `utils/mask.png` matches the camera you will be calibrating. This is a binary image where unused pixels are set to 0 (black).
+Before proceeding, check the [Prerequisites](#2-prerequisites) section and make sure that the mask file at `utils/mask.png` matches the camera you will be calibrating. This is a binary image where unused pixels are set to 0 (black).
 
 | Camera frame | Mask file |
 | ------------ | --------- |
