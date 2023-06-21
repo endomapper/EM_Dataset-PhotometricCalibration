@@ -1,9 +1,13 @@
 #!/bin/bash
+RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
-OK="[${GREEN}OK${NC}]"
+ERROR="[${RED}ERROR${NC}]"
 INFO="[${BLUE}INFO${NC}]"
+WARNING="[${YELLOW}WARNING${NC}]"
+OK="[${GREEN}OK${NC}]"
 
 CURRENT_DIR=$(pwd)
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -60,6 +64,14 @@ fi
 echo
 echo
 echo -e "${INFO} Using '${CAMERA_MODEL}' camera model..."
+echo
+echo
+echo -e "Have you checked the image mask at 'utils/mask.png'? [Y/n]: "
+read YES_NO
+if [ "$YES_NO" == "n" ] ||[ "$YES_NO" == "N" ]; then
+    echo -e "${WARNING} Please make sure that the current image mask matches the camera(s) you will be calibrating."
+    exit 2
+fi
 echo
 echo
 chmod +x ${SCRIPT_DIR}/utils/prepare_dataset.sh

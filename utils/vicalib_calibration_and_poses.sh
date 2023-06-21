@@ -52,8 +52,10 @@ else
 fi
 
 if [ -f "${SEQUENCE}/${SEQUENCE}_geometrical.xml" ]; then
-    echo -e "${WARNING} Calibration file already exists. Skipping calibration."
+    echo -e "${OK} Geometric calibration file found."
 else
+    echo -e "${WARNING} Geometric calibration file not found. This script will calibrate the geometric parameters. Please note that it is preferable to perform the photometric calibration as indicated in the 'Geometric calibration' section of the README."
+    sleep 3
     echo -e "${INFO} Calibrating endoscope..."
     mkdir -p "${SEQUENCE}/vicalib_logs"
 
