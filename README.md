@@ -53,24 +53,34 @@ pip3 install -r requirements.txt
 
 We use [Vicalib](https://github.com/arpg/vicalib) for calibrating the camera intrinsic parameters and obtaining camera poses during photometric calibration.
 
-**Required** to compile and install the slightly [*modified version*](https://github.com/vmbatlle/vicalib) of Vicalib.
+Follow the authors' instructions for compiling and installing [this version](https://github.com/arpg/vicalib/tree/39019c6d84853b3be1ff07d5139cc529a6dd8297) of the third-party software.
 
+## Geometric calibration
+
+We use the geometric calibration obtained according to the [EM_Dataset-GeometricCalibration](https://github.com/endomapper/EM_Dataset-GeometricCalibration) method.
+
+Prepare and run the geometric calibration to obtain the calibration `.xml` before starting the next steps. Place the '.xml' together with the `.mov` video of the calibration sequence.
 
 # 2. EndoMapper photometric calibration
 
 We provide a script to calibrate all endoscopes in the EndoMapper dataset.
 
-Choose one method:
+Before proceeding, check the (Prerequisites)[#prerequisites] section and make sure that the mask file at `utils/mask.png` matches the camera you will be calibrating. This is a binary image where unused pixels are set to 0 (black).
 
-- Auto: execute `./run` and follow the instructions on the terminal.
-- Manual: follow steps below.
+| Camera frame | Mask file |
+| ------------ | --------- |
+|<img src="misc/sample_frame.png" width="300"> | <img src="utils/mask.png" width="300"> |
+
+## Automatic calibration
+
+Execute `./run` and follow the instructions on the terminal.
 
 ## Manual calibration
 
 1. Download the [EndoMapper dataset](https://doi.org/10.7303/syn26707219) [[Azagra et al., 2022](https://arxiv.org/abs/2204.14240.pdf)].
    The calibration sequences should be accesible at `path/to/dataset/Calibrations/Endoscope_XX`.
-2. Check that the folder structure is as follows:
-  ```bash
+2. Check that the folder structure includes the calibration video sequences (`.mov`) and the geometric calibration (`.xml`), as in the following example:
+  ```sh
   $ ls -R path/to/dataset
 
   ./path/to/dataset:
@@ -94,13 +104,46 @@ Choose one method:
 
 ## Calibration results
 
-For each Endoscope_XX the calibration generates:
+For each Endoscope_XX the calibration generates `Endoscope_XX_photometrical.xml` with the photometric parameters:
 
-- `Endoscope_XX_geometrical.xml` with the geometric parameters.
-- `Endoscope_XX_photometrical.xml` with the photometric parameters.
+- **gamma** ($\gamma$): camera response function.
+- **sigma** ($\sigma$): light maximum output radiance.
+- **mu** ($\mu$): spotlight spread factor.
+- **point** (P): location of the point light wrt. optical center of the camera.
+- **principal direction** (D): direction where the output radiance is maximum.
+
+For example:
+```xml
+<rig>
+    <camera>
+        <camera_model index="0" name="" serialno="0" type="gamma" version="1.0">
+            <!-- Camera response model -->
+            <gamma> [ 2.2 ] </gamma>
+        </camera_model>
+    </camera>
+    <light>
+        <light_model index="0" name="" serialno="0" type="sls" version="1.0">
+            <!-- Spot Light Source (SLS) model as in [Modrzejewski et al. (2020)] -->
+            <!-- main intensity value -->
+            <sigma> 1.000000 </sigma>
+            <!-- spread factor -->
+            <mu> 2.767302 </mu>
+            <!-- light centre in camera reference (3D point) -->
+            <P> [ -6.1e-05; -0.001135; -0.003612 ] </P>
+            <!-- principal direction in camera reference (unit 3D vector) -->
+            <D> [ 0.011092; 0.0; 0.999938 ] </D>
+        </light_model>
+    </light>
+</rig>
+```
 
 # 3. Calibrate your own hardware
 
 1. Record a calibration sequence with the [Vicalib pattern](misc/big_pattern.pdf). Perform a camera motion similar to the sequences in the EndoMapper dataset.
-1. Export the recording to a `.MOV` file inside `path/to/dataset/Calibrations/Endoscope_XX`.
-1. Execute `./run`. Note that for non-fisheye cameras you can use `poly2` camera model.
+2. Export the recording to a `.mov` file inside `path/to/dataset/Calibrations/Endoscope_XX`. For example, you can convert an `.avi` sequence into a `.mov` file with:
+
+```sh
+ffmpeg -i Endoscope_XX.avi -acodec libmp3lame  "Endoscope_XX.mov"
+```
+
+3. Execute `./run`. Note that for non-fisheye cameras you can use `poly2` camera model.
