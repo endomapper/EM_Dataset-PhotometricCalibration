@@ -17,6 +17,12 @@ This is a software to obtain an accurate calibration of the endoscope's **photom
   organization={IEEE}
 }
 ```
+# 1. License
+Photometric_calibration is released under AGPLv3 license. 
+
+### Third party code in /src folder
+* fqs.py: Fast Quartic and Cubic solver, from https://github.com/NKrvavica/fqs. Original code has MIT license.
+
 
 # 2. Prerequisites
 We have tested the software in **Ubuntu 20.04**, but it should be executable on other platforms.
