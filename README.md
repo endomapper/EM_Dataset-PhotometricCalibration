@@ -17,6 +17,10 @@ This is a software to obtain an accurate calibration of the endoscope's **photom
   organization={IEEE}
 }
 ```
+This software has been used for photometric calibration of the endoscopes in the EndoMapper dataset described in:
+
+Azagra P. et al. **Endomapper dataset of complete calibrated endoscopy procedures**. *Scientific Data*. 2023. Accepted for publication.
+
 # 1. License
 **EM Dataset: Photometric calibration** is released under AGPLv3 license. 
 
