@@ -80,6 +80,8 @@ def debugSourcesOnEndoscope(axs: plt.Axes,
 
 if OPTIMIZE_LIGHT == 'SINGLE_NFSLS':
     sources = [lights.NormalizedFixedSpotLightSource()]
+elif OPTIMIZE_LIGHT == 'SINGLE_NZFSLS':
+    sources = [lights.NormalizedZFixedSpotLightSource()]
 elif OPTIMIZE_LIGHT == 'SINGLE_NFPLS':
     sources = [lights.NormalizedFixedPointLightSource()]
 elif OPTIMIZE_LIGHT == 'SINGLE_NSLS':
