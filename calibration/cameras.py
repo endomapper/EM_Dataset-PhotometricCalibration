@@ -3,21 +3,13 @@ import numpy as np
 from xml.dom import minidom
 import fqs
 
+from base import Camera as Base
+import vignettings
+
 from config_globals import OPTIMIZE_VIGNETTING
 
 from typing import Any, List, Tuple
 from nptyping import NDArray
-
-
-class Base(object):
-
-    def project(self, x_c: NDArray[(4, Any), float], **kwargs) \
-            -> Tuple[NDArray[(3, Any), float], NDArray[(Any,), bool]]:
-        raise NotImplementedError
-
-    def unproject(self, uv: NDArray[(3, Any), float], **kwargs) \
-            -> Tuple[NDArray[(4, Any), float], NDArray[(Any,), bool]]:
-        raise NotImplementedError
 
 class Factory(object):
     def fromXML(xml: str, mask: str) -> Base:
@@ -34,9 +26,6 @@ class Factory(object):
         else:
             raise ValueError(
                 f'Invalid camera model type in XML file: \'{type}\'')
-
-
-import vignettings  # nopep8
 
 class Pinhole(Base):
 

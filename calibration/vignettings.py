@@ -1,7 +1,7 @@
 import numpy as np
 
 import utils
-import cameras
+from base import Camera
 
 from typing import Any, List, Tuple
 from nptyping import NDArray
@@ -19,7 +19,7 @@ class Base(utils.Optimizable):
 
 class Constant(Base):
     def __init__(self,
-                 camera: cameras.Base,
+                 camera: Camera,
                  value: float) \
             -> None:
         self.camera = camera
@@ -50,11 +50,11 @@ class Constant(Base):
 
 class Cosine(Base):
 
-    camera: cameras.Base  # reference to camera
+    camera: Camera  # reference to camera
     k: float  # cosine exponent
 
     def __init__(self,
-                 camera: cameras.Base,
+                 camera: Camera,
                  k: float) -> None:
         self.camera = camera
         self.k = k
@@ -84,12 +84,12 @@ class Cosine(Base):
 
 class LUT(Base):
 
-    camera: cameras.Base  # reference to camera
+    camera: Camera  # reference to camera
     _angles: NDArray[(Any), float]
     _values: NDArray[(Any, float)]
 
     def __init__(self,
-                 camera: cameras.Base,
+                 camera: Camera,
                  step: int) -> None:
         self.camera = camera
         self._angles = np.linspace(0, np.radians(90), step)
