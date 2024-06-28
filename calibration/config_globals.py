@@ -1,6 +1,7 @@
 # Light emission can be estimated for one or more sources
 # Available modes:
 #   - SINGLE_NFSLS
+#   - SINGLE_NZFSLS
 #   - SINGLE_NFPLS
 #   - SINGLE_NSLS
 #   - SINGLE_NSLS2D
@@ -14,7 +15,7 @@
 #   - N: normalized radiance (emission at x is fixed)
 #   - F: fixed position (known pose wrt. camera or aligned to optical center)
 #   - Z: principal direction fixed to camera forward (SLS only)
-OPTIMIZE_LIGHT = 'SINGLE_NSLS'
+OPTIMIZE_LIGHT = 'SINGLE_NZFSLS'
 
 # Bidirectional Reflectance Distribution Function (BRDF) is estimated for the
 # whole calibration pattern bet but is not a useful parameter.

@@ -56,7 +56,7 @@ def save_config(file_name: str, cg: Dict[str, str]):
 
 
 def save_calib_xml(file_name: str, renderer: renderers.Basic):
-    assert OPTIMIZE_LIGHT in ['SINGLE_NSLS', 'SINGLE_NFSLS', 'SINGLE_NSLS2D'] and \
+    assert OPTIMIZE_LIGHT in ['SINGLE_NSLS', 'SINGLE_NFSLS', 'SINGLE_NZFSLS', 'SINGLE_NSLS2D'] and \
         OPTIMIZE_VIGNETTING in ['NONE', 'COSINE'], \
         'XML export invalid for current configuration.'
 
