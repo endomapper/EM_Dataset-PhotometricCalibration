@@ -15,7 +15,7 @@
 #   - N: normalized radiance (emission at x is fixed)
 #   - F: fixed position (known pose wrt. camera or aligned to optical center)
 #   - Z: principal direction fixed to camera forward (SLS only)
-OPTIMIZE_LIGHT = 'SINGLE_NZFSLS'
+OPTIMIZE_LIGHT = 'SINGLE_NSLS'
 
 # Bidirectional Reflectance Distribution Function (BRDF) is estimated for the
 # whole calibration pattern bet but is not a useful parameter.
